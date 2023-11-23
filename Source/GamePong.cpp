@@ -58,7 +58,25 @@ void GamePong::LoadScene()
 
 	// middle dotted line
 
+	for (float z = -DIST_SMALLEST / 2; z > -(DIST_MAXHALF - 2 * DIST_SMALLEST); z -= 2 * DIST_SMALLEST)
+	{
+		resourceManager_.LoadMesh_Rectangle(
+			glm::vec2(
+				-DIST_SMALLEST / 2,
+				z),
+			DIST_SMALLEST / 2,
+			DIST_SMALLEST);
+	}
 
+	for (float z = -DIST_SMALLEST / 2 + 2*DIST_SMALLEST; z < (DIST_MAXHALF - 2 * DIST_SMALLEST) - DIST_SMALLEST; z += 2 * DIST_SMALLEST)
+	{
+		resourceManager_.LoadMesh_Rectangle(
+			glm::vec2(
+				-DIST_SMALLEST / 2,
+				z),
+			DIST_SMALLEST / 2,
+			DIST_SMALLEST);
+	}
 
 	// ----
 
