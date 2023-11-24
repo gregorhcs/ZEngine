@@ -1,5 +1,7 @@
 #include "GamePong.h"
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "RectangleMesh.h"
 
 #define DIST_SMALLEST 0.025f
@@ -90,6 +92,18 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 {
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window.GLFWWindow(), true);
+
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_W) == GLFW_PRESS)
+		meshPlayerOne_->transform[1] += deltaTime * 1.5f;
+
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_S) == GLFW_PRESS)
+		meshPlayerOne_->transform[1] -= deltaTime * 1.5f;
+
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_UP) == GLFW_PRESS)
+		meshPlayerTwo_->transform[1] += deltaTime * 1.5f;
+
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+		meshPlayerTwo_->transform[1] -= deltaTime * 1.5f;
 }
 
 void GamePong::Render(zn::Window& window, double deltaTime)
@@ -98,6 +112,7 @@ void GamePong::Render(zn::Window& window, double deltaTime)
 
 	for (zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
 	{
+		shaderProgram_->SetVec4f("transform", mesh->transform);
 		mesh->Draw();
 	}
 }

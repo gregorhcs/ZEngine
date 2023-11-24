@@ -172,6 +172,16 @@
     <ClInclude Include="Include\Viewport.h" />
     <ClInclude Include="Include\Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\awesomeface.png" />
+    <Image Include="Resources\container.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CubeWithTexture.frag" />
+    <None Include="Resources\CubeWithTexture.vert" />
+    <None Include="Resources\Rectangle.frag" />
+    <None Include="Resources\Rectangle.vert" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

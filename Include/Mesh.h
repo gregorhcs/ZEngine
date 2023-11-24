@@ -22,6 +22,8 @@ class Mesh
 
 public:
 
+    glm::vec4 transform = glm::vec4(0.f);
+
     Mesh() {};
     ~Mesh();
 

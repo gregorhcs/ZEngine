@@ -13,114 +13,166 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Application">
+      <UniqueIdentifier>{9ebec3a1-7aa1-473d-822f-5b60bdb72451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Application\InitUtils">
+      <UniqueIdentifier>{ac18ccd0-7a60-4942-9962-f2ccce3657e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ZEngine">
+      <UniqueIdentifier>{e16e8255-51b3-4ce5-9fa5-b3f02433658a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ZGames">
+      <UniqueIdentifier>{5587c915-c28d-4626-b7cd-498b5f064614}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ThirdParty">
+      <UniqueIdentifier>{aed41ea6-0214-464c-94a9-90f434a44dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application">
+      <UniqueIdentifier>{76b86ebd-c002-4523-a652-2d088ebda018}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Application\InitUtils">
+      <UniqueIdentifier>{ec6e68ae-c26f-4869-beab-f7c47939fe28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ZEngine">
+      <UniqueIdentifier>{bc8a5c40-c438-4be5-a661-e93080518548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ThirdParty">
+      <UniqueIdentifier>{e2f5d041-94f3-4478-abf2-024915ed32b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ZGames">
+      <UniqueIdentifier>{76d22799-9c33-42a8-aa0a-68c686dd307d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Camera.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Viewport.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GamePong.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameRotatingCubes.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
     <ClCompile Include="Source\GLFWWindowCallbackBindUtil.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Application\InitUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ScopedGLFWContext.cpp">
+      <Filter>Source Files\Application\InitUtils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderProgram.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RectangleMesh.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stbi_image.cpp">
+      <Filter>Source Files\ThirdParty</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\glad.c">
+      <Filter>Source Files\ThirdParty</Filter>
     </ClCompile>
     <ClCompile Include="Source\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\GameRotatingCubes.cpp">
+      <Filter>Source Files\ZGames</Filter>
     </ClCompile>
-    <ClCompile Include="Source\RectangleMesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ResourceManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ScopedGLFWContext.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Viewport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Window.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\stbi_image.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Source\GamePong.cpp">
+      <Filter>Source Files\ZGames</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Application.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\GamePong.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\GameRotatingCubes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\GLADLoadUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\GLFWWindowCallbackBindUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\RectangleMesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ResourceManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SampleDataFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ScopedGLFWContext.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Texture.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="Include\Viewport.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
     <ClInclude Include="Include\Window.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Include\stb_image.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Include\GLFWWindowCallbackBindUtil.h">
+      <Filter>Header Files\Application\InitUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GLADLoadUtil.h">
+      <Filter>Header Files\Application\InitUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ScopedGLFWContext.h">
+      <Filter>Header Files\Application\InitUtils</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Camera.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Mesh.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\RectangleMesh.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Resource.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ResourceManager.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SampleDataFactory.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ShaderProgram.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Texture.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GameRotatingCubes.h">
+      <Filter>Header Files\ZGames</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\GamePong.h">
+      <Filter>Header Files\ZGames</Filter>
     </ClInclude>
     <ClInclude Include="Include\stb_image_write.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\ThirdParty</Filter>
     </ClInclude>
+    <ClInclude Include="Include\stb_image.h">
+      <Filter>Header Files\ThirdParty</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\awesomeface.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CubeWithTexture.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\CubeWithTexture.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Rectangle.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\Rectangle.vert">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
