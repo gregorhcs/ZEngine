@@ -94,16 +94,16 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 		glfwSetWindowShouldClose(window.GLFWWindow(), true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_W) == GLFW_PRESS)
-		meshPlayerOne_->transform[1] += deltaTime * 1.5f;
+		ZMoveMesh(meshPlayerOne_, deltaTime, true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_S) == GLFW_PRESS)
-		meshPlayerOne_->transform[1] -= deltaTime * 1.5f;
+		ZMoveMesh(meshPlayerOne_, deltaTime, false);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_UP) == GLFW_PRESS)
-		meshPlayerTwo_->transform[1] += deltaTime * 1.5f;
+		ZMoveMesh(meshPlayerTwo_, deltaTime, true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
-		meshPlayerTwo_->transform[1] -= deltaTime * 1.5f;
+		ZMoveMesh(meshPlayerTwo_, deltaTime, false);
 }
 
 void GamePong::Render(zn::Window& window, double deltaTime)
@@ -114,5 +114,23 @@ void GamePong::Render(zn::Window& window, double deltaTime)
 	{
 		shaderProgram_->SetVec4f("transform", mesh->transform);
 		mesh->Draw();
+	}
+}
+
+void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
+{
+	if (bGoUp)
+	{
+		mesh->transform[1] += deltaTime * 1.5f;
+
+		if (mesh->transform[1] > 0.8f)
+			mesh->transform[1] = 0.8f;
+	}
+	else
+	{
+		mesh->transform[1] -= deltaTime * 1.5f;
+
+		if (mesh->transform[1] < -0.8f)
+			mesh->transform[1] = -0.8f;
 	}
 }

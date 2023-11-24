@@ -30,5 +30,10 @@ class GamePong : public zn::Application
 		void ProcessInput(zn::Window& window, double deltaTime);
 		void Render(zn::Window& window, double deltaTime);
 
+		// ---------------------------
+		// utils
+
+		void ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp);
+
 };
 
