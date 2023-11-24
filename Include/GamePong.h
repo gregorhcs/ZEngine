@@ -28,10 +28,13 @@ class GamePong : public zn::Application
 		// ticked functions
 
 		void ProcessInput(zn::Window& window, double deltaTime);
+		void MoveBall(double deltaTime);
 		void Render(zn::Window& window, double deltaTime);
 
 		// ---------------------------
 		// utils
+
+		glm::vec2 ballDirection_ = glm::vec2(1.f, -0.1f);
 
 		void ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp);
 

@@ -19,12 +19,14 @@ class RectangleMesh : public Mesh
 		RectangleMesh(const glm::vec2& topLeft, float width, float height);
 		RectangleMesh();
 
+		virtual bool CheckCollision(const Mesh* other) const noexcept;
+
 	private:
 
 		float rectangleVertexData[8] = {
-			 0.5f,  0.5f,  // top right
-			 0.5f, -0.5f,  // bottom right
-			-0.5f, -0.5f,  // bottom left
+			-0.5f,  0.5f,  // top right
+			 0.5f,  0.5f,  // bottom right
+			 0.5f, -0.5f,  // bottom left
 			-0.5f,  0.5f,  // top left 
 		};
 

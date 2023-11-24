@@ -14,16 +14,16 @@ zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, const glm::vec2& topR
 	)
 {
 	rectangleVertexData[6] = topLeft.x;
-	rectangleVertexData[7] = -topLeft.y;
+	rectangleVertexData[7] = topLeft.y;
 
 	rectangleVertexData[0] = topRight.x;
-	rectangleVertexData[1] = -topRight.y;
+	rectangleVertexData[1] = topRight.y;
 
 	rectangleVertexData[4] = bottomLeft.x;
-	rectangleVertexData[5] = -bottomLeft.y;
+	rectangleVertexData[5] = bottomLeft.y;
 
 	rectangleVertexData[2] = bottomRight.x;
-	rectangleVertexData[3] = -bottomRight.y;
+	rectangleVertexData[3] = bottomRight.y;
 }
 
 zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, float width, float height) :
@@ -38,3 +38,8 @@ zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, float width, float he
 zn::RectangleMesh::RectangleMesh() :
 	RectangleMesh(glm::vec2(-0.5f, -0.5f), 1.0f, 1.0f)
 {}
+
+bool zn::RectangleMesh::CheckCollision(const Mesh * other) const noexcept
+{
+	return false;
+}

@@ -33,6 +33,8 @@ public:
     // bind vao and issue draw call
     void Draw() const noexcept;
 
+    virtual bool CheckCollision(const Mesh* other) const noexcept;
+
 protected:
 
     Mesh(GLfloat* vertices, unsigned int verticesSize, unsigned int* indices, unsigned int indicesSize, std::vector<VertexAttribute> vertexAttributes);

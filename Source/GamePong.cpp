@@ -12,10 +12,10 @@
 #define DIST_MAX 2.0f
 
 GamePong::GamePong() :
-	Application(false)
+	Application(true)
 {
 	SetClearColor(glm::vec3(0.f, 0.f, 0.f));
-	SetWindowAndViewportSize(1000, 500);
+	SetWindowAndViewportSize(1920, 1080);
 	SetWindowTitle("Pong");
 
 	RegisterTickObserver([this](Application& app, double deltaTime) {
@@ -24,6 +24,11 @@ GamePong::GamePong() :
 	RegisterTickObserver([this](Application& app, double deltaTime) {
 		Render(app.GetWindow(), deltaTime);
 		});
+	RegisterTickObserver([this](Application& app, double deltaTime) {
+		MoveBall(deltaTime);
+		});
+
+	glm::normalize(ballDirection_);
 
 	LoadScene();
 }
@@ -41,6 +46,10 @@ void GamePong::LoadScene()
 
 	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(-0.9f, - DIST_PLAYER_HEIGHT / 2), DIST_SMALLEST, DIST_PLAYER_HEIGHT);
 	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2( 0.9f, - DIST_PLAYER_HEIGHT / 2), DIST_SMALLEST, DIST_PLAYER_HEIGHT);
+
+	// ball
+
+	meshBall_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(-0.5f, -0.7f), 0.5f * DIST_SMALLEST, DIST_SMALLEST);
 
 	// top & bottom border
 
@@ -104,6 +113,12 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerTwo_, deltaTime, false);
+}
+
+void GamePong::MoveBall(double deltaTime)
+{
+	meshBall_->transform[0] += 0.7f * deltaTime * ballDirection_.x;
+	meshBall_->transform[1] += 0.7f * deltaTime * ballDirection_.y;
 }
 
 void GamePong::Render(zn::Window& window, double deltaTime)

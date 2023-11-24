@@ -104,4 +104,9 @@ void Mesh::Draw() const noexcept
 	glBindVertexArray(0);
 }
 
+bool Mesh::CheckCollision(const Mesh* other) const noexcept
+{
+	return false;
+}
+
 }
