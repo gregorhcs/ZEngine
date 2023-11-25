@@ -34,7 +34,10 @@ class GamePong : public zn::Application
 		// ---------------------------
 		// utils
 
-		glm::vec2 ballDirection_ = glm::vec2(1.f, -0.1f);
+		float ballSpeed_ = 200.f;
+		float playerSpeed_ = 220.f;
+
+		glm::vec2 ballDirection_ = glm::vec2(1.f, 0.75f);
 
 		void ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp);
 

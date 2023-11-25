@@ -43,6 +43,12 @@
     <Filter Include="Source Files\ZGames">
       <UniqueIdentifier>{76d22799-9c33-42a8-aa0a-68c686dd307d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ZEngine\Resources">
+      <UniqueIdentifier>{0f13aac1-99e9-4f1c-8f2a-9d5711b6294c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ZEngine\Resources">
+      <UniqueIdentifier>{3efcc117-9fcf-47b5-8a4c-f9299e563040}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -59,24 +65,6 @@
     </ClCompile>
     <ClCompile Include="Source\ScopedGLFWContext.cpp">
       <Filter>Source Files\Application\InitUtils</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Texture.cpp">
-      <Filter>Source Files\ZEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ShaderProgram.cpp">
-      <Filter>Source Files\ZEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\ResourceManager.cpp">
-      <Filter>Source Files\ZEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Resource.cpp">
-      <Filter>Source Files\ZEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\RectangleMesh.cpp">
-      <Filter>Source Files\ZEngine</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Mesh.cpp">
-      <Filter>Source Files\ZEngine</Filter>
     </ClCompile>
     <ClCompile Include="Source\Camera.cpp">
       <Filter>Source Files\ZEngine</Filter>
@@ -95,6 +83,30 @@
     </ClCompile>
     <ClCompile Include="Source\GamePong.cpp">
       <Filter>Source Files\ZGames</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Mesh.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\RectangleMesh.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Resource.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ResourceManager.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ShaderProgram.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Texture.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Object.cpp">
+      <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\World.cpp">
+      <Filter>Source Files\ZEngine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,27 +131,6 @@
     <ClInclude Include="Include\Camera.h">
       <Filter>Header Files\ZEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Mesh.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\RectangleMesh.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Resource.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ResourceManager.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\SampleDataFactory.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\ShaderProgram.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="Include\Texture.h">
-      <Filter>Header Files\ZEngine</Filter>
-    </ClInclude>
     <ClInclude Include="Include\GameRotatingCubes.h">
       <Filter>Header Files\ZGames</Filter>
     </ClInclude>
@@ -151,6 +142,33 @@
     </ClInclude>
     <ClInclude Include="Include\stb_image.h">
       <Filter>Header Files\ThirdParty</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Mesh.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\RectangleMesh.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Resource.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ResourceManager.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\SampleDataFactory.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ShaderProgram.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Texture.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Object.h">
+      <Filter>Header Files\ZEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\World.h">
+      <Filter>Header Files\ZEngine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -48,7 +48,7 @@ void GameRotatingCubes::LoadScene()
 	usedTextures_.push_back(resourceManager_.LoadTexture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA));
 
 	shaderProgram_->Use();
-	shaderProgram_->SetTextureUniforms(usedTextures_.size());
+	shaderProgram_->SetTextureUniforms(static_cast<unsigned int>(usedTextures_.size()));
 
 	cube_ = resourceManager_.LoadMesh_CubeWithTexture();
 	cube_->SendVertexDataToGPU();

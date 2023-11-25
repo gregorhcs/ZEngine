@@ -22,7 +22,9 @@ class Mesh
 
 public:
 
-    glm::vec4 transform = glm::vec4(0.f);
+    glm::vec3 position_ = glm::vec3(0.f);
+    glm::vec3 rotation_ = glm::vec3(0.f);
+    glm::vec3 scale_ = glm::vec3(0.f);
 
     Mesh() {};
     ~Mesh();

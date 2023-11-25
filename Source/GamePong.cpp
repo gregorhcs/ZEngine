@@ -4,12 +4,14 @@
 
 #include "RectangleMesh.h"
 
-#define DIST_SMALLEST 0.025f
-#define DIST_REGULAR 0.1f
-#define DIST_PLAYER_HEIGHT 0.3f
+#define DIST_SMALLEST 5.f
+#define DIST_MEDIUM 10.f
+#define DIST_LARGE 20.f
 
-#define DIST_MAXHALF 1.0f
-#define DIST_MAX 2.0f
+#define DIST_PLAYER_HEIGHT 100.f
+
+#define DIST_MAX_W 1920.f
+#define DIST_MAX_H 1080.f
 
 GamePong::GamePong() :
 	Application(true)
@@ -44,49 +46,49 @@ void GamePong::LoadScene()
 
 	// players
 
-	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(-0.9f, - DIST_PLAYER_HEIGHT / 2), DIST_SMALLEST, DIST_PLAYER_HEIGHT);
-	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2( 0.9f, - DIST_PLAYER_HEIGHT / 2), DIST_SMALLEST, DIST_PLAYER_HEIGHT);
+	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(3*DIST_MEDIUM,				DIST_MAX_H/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(DIST_MAX_W - 4* DIST_MEDIUM, DIST_MAX_H/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
 
 	// ball
 
-	meshBall_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(-0.5f, -0.7f), 0.5f * DIST_SMALLEST, DIST_SMALLEST);
+	meshBall_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(50.f, 50.f), DIST_MEDIUM, DIST_MEDIUM);
 
 	// top & bottom border
 
 	resourceManager_.LoadMesh_Rectangle(
 		glm::vec2(
-			- (DIST_MAXHALF - DIST_SMALLEST), 
-			- (DIST_MAXHALF - 1 * DIST_SMALLEST)), 
-		DIST_MAX - 2 * DIST_SMALLEST, 
-		DIST_SMALLEST);
+			DIST_MEDIUM,
+			2 * DIST_MEDIUM),
+		DIST_MAX_W - 2* DIST_MEDIUM,
+		DIST_MEDIUM);
 
 	resourceManager_.LoadMesh_Rectangle(
 		glm::vec2(
-			-(DIST_MAXHALF - DIST_SMALLEST),
-			+(DIST_MAXHALF - 2 * DIST_SMALLEST)),
-		DIST_MAX - 2 * DIST_SMALLEST,
-		DIST_SMALLEST);
+			DIST_MEDIUM,
+			DIST_MAX_H - 2* DIST_MEDIUM),
+		DIST_MAX_W - 2 * DIST_MEDIUM,
+		DIST_MEDIUM);
 
 	// middle dotted line
 
-	for (float z = -DIST_SMALLEST / 2; z > -(DIST_MAXHALF - 2 * DIST_SMALLEST); z -= 2 * DIST_SMALLEST)
+	for (float z = DIST_MAX_H/2 - DIST_MEDIUM; z > 3 * DIST_MEDIUM; z -= 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
 			glm::vec2(
-				-DIST_SMALLEST / 2,
+				DIST_MAX_W/2 - DIST_MEDIUM / 2,
 				z),
-			DIST_SMALLEST / 2,
-			DIST_SMALLEST);
+			DIST_MEDIUM,
+			DIST_MEDIUM);
 	}
 
-	for (float z = -DIST_SMALLEST / 2 + 2*DIST_SMALLEST; z < (DIST_MAXHALF - 2 * DIST_SMALLEST) - DIST_SMALLEST; z += 2 * DIST_SMALLEST)
+	for (float z = DIST_MAX_H / 2 + DIST_MEDIUM; z < DIST_MAX_H - 3 * DIST_MEDIUM; z += 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
 			glm::vec2(
-				-DIST_SMALLEST / 2,
+				DIST_MAX_W / 2 - DIST_MEDIUM / 2,
 				z),
-			DIST_SMALLEST / 2,
-			DIST_SMALLEST);
+			DIST_MEDIUM,
+			DIST_MEDIUM);
 	}
 
 	// ----
@@ -117,17 +119,18 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 
 void GamePong::MoveBall(double deltaTime)
 {
-	meshBall_->transform[0] += 0.7f * deltaTime * ballDirection_.x;
-	meshBall_->transform[1] += 0.7f * deltaTime * ballDirection_.y;
+	meshBall_->position_[0] += ballSpeed_ * deltaTime * ballDirection_.x;
+	meshBall_->position_[1] += ballSpeed_ * deltaTime * ballDirection_.y;
 }
 
 void GamePong::Render(zn::Window& window, double deltaTime)
 {
 	shaderProgram_->Use();
+	shaderProgram_->SetMat4f("projection", glm::ortho(0.f, 1920.f, 1080.f, 0.f, -1.f, 1.f));
 
 	for (zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
 	{
-		shaderProgram_->SetVec4f("transform", mesh->transform);
+		shaderProgram_->SetMat4f("model", glm::translate(glm::mat4(1.f), mesh->position_));
 		mesh->Draw();
 	}
 }
@@ -136,16 +139,16 @@ void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
 {
 	if (bGoUp)
 	{
-		mesh->transform[1] += deltaTime * 1.5f;
+		mesh->position_.y -= static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->transform[1] > 0.8f)
-			mesh->transform[1] = 0.8f;
+		if (mesh->position_.y < 0.2f * DIST_MAX_H)
+			mesh->position_.y = 0.2f * DIST_MAX_H;
 	}
 	else
 	{
-		mesh->transform[1] -= deltaTime * 1.5f;
+		mesh->position_.y += static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->transform[1] < -0.8f)
-			mesh->transform[1] = -0.8f;
+		if (mesh->position_.y > 0.8f * DIST_MAX_H)
+			mesh->position_.y = 0.8f * DIST_MAX_H;
 	}
 }

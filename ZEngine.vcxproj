@@ -142,6 +142,7 @@
     <ClCompile Include="Source\GLFWWindowCallbackBindUtil.cpp" />
     <ClCompile Include="Source\main.cpp" />
     <ClCompile Include="Source\Mesh.cpp" />
+    <ClCompile Include="Source\Object.cpp" />
     <ClCompile Include="Source\RectangleMesh.cpp" />
     <ClCompile Include="Source\Resource.cpp" />
     <ClCompile Include="Source\ResourceManager.cpp" />
@@ -151,6 +152,7 @@
     <ClCompile Include="Source\Texture.cpp" />
     <ClCompile Include="Source\Viewport.cpp" />
     <ClCompile Include="Source\Window.cpp" />
+    <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Application.h" />
@@ -160,6 +162,7 @@
     <ClInclude Include="Include\GLADLoadUtil.h" />
     <ClInclude Include="Include\GLFWWindowCallbackBindUtil.h" />
     <ClInclude Include="Include\Mesh.h" />
+    <ClInclude Include="Include\Object.h" />
     <ClInclude Include="Include\RectangleMesh.h" />
     <ClInclude Include="Include\Resource.h" />
     <ClInclude Include="Include\ResourceManager.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Include\Texture.h" />
     <ClInclude Include="Include\Viewport.h" />
     <ClInclude Include="Include\Window.h" />
+    <ClInclude Include="Include\World.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\awesomeface.png" />
