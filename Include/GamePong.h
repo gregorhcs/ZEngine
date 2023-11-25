@@ -34,8 +34,8 @@ class GamePong : public zn::Application
 		// ---------------------------
 		// utils
 
-		float ballSpeed_ = 200.f;
-		float playerSpeed_ = 220.f;
+		float ballSpeed_ = 500.f;
+		float playerSpeed_ = 550.f;
 
 		glm::vec2 ballDirection_ = glm::vec2(1.f, 0.75f);
 

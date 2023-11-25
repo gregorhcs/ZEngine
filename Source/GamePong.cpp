@@ -130,7 +130,11 @@ void GamePong::Render(zn::Window& window, double deltaTime)
 
 	for (zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
 	{
-		shaderProgram_->SetMat4f("model", glm::translate(glm::mat4(1.f), mesh->position_));
+		glm::mat4 model(1.f);
+		model = glm::translate(model, mesh->position_);
+		model = glm::scale(model, mesh->scale_);
+		shaderProgram_->SetMat4f("model", model);
+
 		mesh->Draw();
 	}
 }
@@ -141,14 +145,14 @@ void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
 	{
 		mesh->position_.y -= static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y < 0.2f * DIST_MAX_H)
-			mesh->position_.y = 0.2f * DIST_MAX_H;
+		if (mesh->position_.y < 0.05f * DIST_MAX_H)
+			mesh->position_.y = 0.05f * DIST_MAX_H;
 	}
 	else
 	{
 		mesh->position_.y += static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y > 0.8f * DIST_MAX_H)
-			mesh->position_.y = 0.8f * DIST_MAX_H;
+		if (mesh->position_.y > 0.95f * DIST_MAX_H - DIST_PLAYER_HEIGHT)
+			mesh->position_.y = 0.95f * DIST_MAX_H - DIST_PLAYER_HEIGHT;
 	}
 }

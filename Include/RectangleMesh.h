@@ -24,10 +24,10 @@ class RectangleMesh : public Mesh
 	private:
 
 		float rectangleVertexData[8] = {
-			-0.5f,  0.5f,  // top right
-			 0.5f,  0.5f,  // bottom right
-			 0.5f, -0.5f,  // bottom left
-			-0.5f,  0.5f,  // top left 
+			1.f, 0.f,  // top right
+			1.f, 1.f,  // bottom right
+			0.f, 1.f,  // bottom left
+			0.f, 0.f,  // top left 
 		};
 
 		unsigned int rectangleIndices[6] = {
