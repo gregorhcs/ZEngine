@@ -40,12 +40,12 @@ GameRotatingCubes::GameRotatingCubes() : Application(false)
 void GameRotatingCubes::LoadScene()
 {
 	shaderProgram_ = resourceManager_.LoadShaderProgram(
-		"res/CubeWithTexture.vert",
-		"res/CubeWithTexture.frag"
+		"Resources/CubeWithTexture.vert",
+		"Resources/CubeWithTexture.frag"
 	);
 
-	usedTextures_.push_back(resourceManager_.LoadTexture("res/container.jpg", GL_TEXTURE0, GL_RGB));
-	usedTextures_.push_back(resourceManager_.LoadTexture("res/awesomeface.png", GL_TEXTURE1, GL_RGBA));
+	usedTextures_.push_back(resourceManager_.LoadTexture("Resources/container.jpg", GL_TEXTURE0, GL_RGB));
+	usedTextures_.push_back(resourceManager_.LoadTexture("Resources/awesomeface.png", GL_TEXTURE1, GL_RGBA));
 
 	shaderProgram_->Use();
 	shaderProgram_->SetTextureUniforms(static_cast<unsigned int>(usedTextures_.size()));
