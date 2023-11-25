@@ -103,14 +103,22 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_W) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerOne_, deltaTime, true);
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_A) == GLFW_PRESS)
+		ZMoveMesh(meshPlayerOne_, deltaTime, true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_S) == GLFW_PRESS)
+		ZMoveMesh(meshPlayerOne_, deltaTime, false);
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_D) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerOne_, deltaTime, false);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_UP) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerTwo_, deltaTime, true);
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_LEFT) == GLFW_PRESS)
+		ZMoveMesh(meshPlayerTwo_, deltaTime, true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_DOWN) == GLFW_PRESS)
+		ZMoveMesh(meshPlayerTwo_, deltaTime, false);
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_RIGHT) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerTwo_, deltaTime, false);
 }
 
