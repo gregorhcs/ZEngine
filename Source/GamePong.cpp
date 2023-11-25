@@ -10,9 +10,6 @@
 
 #define DIST_PLAYER_HEIGHT 100.f
 
-#define DIST_MAX_W 1920.f
-#define DIST_MAX_H 1080.f
-
 GamePong::GamePong() :
 	Application(true)
 {
@@ -46,8 +43,8 @@ void GamePong::LoadScene()
 
 	// players
 
-	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(3*DIST_MEDIUM,				DIST_MAX_H/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
-	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(DIST_MAX_W - 4* DIST_MEDIUM, DIST_MAX_H/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(3*DIST_MEDIUM,			height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(width_ - 4* DIST_MEDIUM, height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
 
 	// ball
 
@@ -59,33 +56,33 @@ void GamePong::LoadScene()
 		glm::vec2(
 			DIST_MEDIUM,
 			2 * DIST_MEDIUM),
-		DIST_MAX_W - 2* DIST_MEDIUM,
+		width_ - 2* DIST_MEDIUM,
 		DIST_MEDIUM);
 
 	resourceManager_.LoadMesh_Rectangle(
 		glm::vec2(
 			DIST_MEDIUM,
-			DIST_MAX_H - 2* DIST_MEDIUM),
-		DIST_MAX_W - 2 * DIST_MEDIUM,
+			height_ - 2* DIST_MEDIUM),
+		width_ - 2 * DIST_MEDIUM,
 		DIST_MEDIUM);
 
 	// middle dotted line
 
-	for (float z = DIST_MAX_H/2 - DIST_MEDIUM; z > 3 * DIST_MEDIUM; z -= 2 * DIST_MEDIUM)
+	for (float z = height_ /2 - DIST_MEDIUM; z > 3 * DIST_MEDIUM; z -= 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
 			glm::vec2(
-				DIST_MAX_W/2 - DIST_MEDIUM / 2,
+				width_ /2 - DIST_MEDIUM / 2,
 				z),
 			DIST_MEDIUM,
 			DIST_MEDIUM);
 	}
 
-	for (float z = DIST_MAX_H / 2 + DIST_MEDIUM; z < DIST_MAX_H - 3 * DIST_MEDIUM; z += 2 * DIST_MEDIUM)
+	for (float z = height_ / 2 + DIST_MEDIUM; z < height_ - 3 * DIST_MEDIUM; z += 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
 			glm::vec2(
-				DIST_MAX_W / 2 - DIST_MEDIUM / 2,
+				width_ / 2 - DIST_MEDIUM / 2,
 				z),
 			DIST_MEDIUM,
 			DIST_MEDIUM);
@@ -126,7 +123,7 @@ void GamePong::MoveBall(double deltaTime)
 void GamePong::Render(zn::Window& window, double deltaTime)
 {
 	shaderProgram_->Use();
-	shaderProgram_->SetMat4f("projection", glm::ortho(0.f, 1920.f, 1080.f, 0.f, -1.f, 1.f));
+	shaderProgram_->SetMat4f("projection", glm::ortho(0.f, width_, height_, 0.f, -1.f, 1.f));
 
 	for (zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
 	{
@@ -145,14 +142,14 @@ void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
 	{
 		mesh->position_.y -= static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y < 0.05f * DIST_MAX_H)
-			mesh->position_.y = 0.05f * DIST_MAX_H;
+		if (mesh->position_.y < 0.05f * height_)
+			mesh->position_.y = 0.05f * height_;
 	}
 	else
 	{
 		mesh->position_.y += static_cast<double>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y > 0.95f * DIST_MAX_H - DIST_PLAYER_HEIGHT)
-			mesh->position_.y = 0.95f * DIST_MAX_H - DIST_PLAYER_HEIGHT;
+		if (mesh->position_.y > 0.95f * height_ - DIST_PLAYER_HEIGHT)
+			mesh->position_.y = 0.95f * height_ - DIST_PLAYER_HEIGHT;
 	}
 }

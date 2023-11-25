@@ -33,6 +33,13 @@ class Application
 		void Run();
 		double DeltaTime() const;
 
+		float Width() const;
+		float Height() const;
+
+	protected:
+
+		float width_, height_;
+
 	private:
 
 		// ---------------------------

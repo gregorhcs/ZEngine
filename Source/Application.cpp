@@ -12,6 +12,8 @@
 namespace zn {
 
 Application::Application(bool bFullScreen) :
+	width_(800),
+	height_(600),
 	scopedGlfwContext_(ScopedGLFWContext(3, 3)),
 	window_(nullptr),
 	viewport_(nullptr),
@@ -29,7 +31,7 @@ Application::Application(bool bFullScreen) :
 
 	glEnable(GL_DEPTH_TEST);
 
-	viewport_ = new Viewport(window_, 800, 600);
+	viewport_ = new Viewport(window_, width_, height_);
 }
 
 Application::~Application()
@@ -54,6 +56,9 @@ Viewport& Application::GetViewport()
 
 void Application::SetWindowAndViewportSize(int width, int height)
 {
+	width_ = width;
+	height_ = height;
+
 	window_->SetSize(width, height);
 	viewport_->SetSize(width, height);
 }
@@ -101,6 +106,16 @@ void Application::Run()
 double Application::DeltaTime() const
 {
     return frameDeltaTime_;
+}
+
+float Application::Width() const
+{
+	return width_;
+}
+
+float Application::Height() const
+{
+	return height_;
 }
 
 }
