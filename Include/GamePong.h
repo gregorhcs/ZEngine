@@ -18,6 +18,8 @@ class GamePong : public zn::Application
 
 		zn::ShaderProgram* shaderProgram_;
 
+		zn::Mesh* meshBorderTop_;
+		zn::Mesh* meshBorderBot_;
 		zn::Mesh* meshPlayerOne_;
 		zn::Mesh* meshPlayerTwo_;
 		zn::Mesh* meshBall_;
@@ -40,6 +42,8 @@ class GamePong : public zn::Application
 		glm::vec2 ballDirection_ = glm::vec2(1.f, 0.75f);
 
 		void ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp);
+
+		void CheckBallCollision();
 
 };
 

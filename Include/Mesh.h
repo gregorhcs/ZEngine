@@ -26,6 +26,8 @@ public:
     glm::vec3 rotation_ = glm::vec3(0.f);
     glm::vec3 scale_ = glm::vec3(0.f);
 
+    bool bHasCollision = false;
+
     Mesh() {};
     ~Mesh();
 
@@ -34,6 +36,16 @@ public:
 
     // bind vao and issue draw call
     void Draw() const noexcept;
+
+    virtual glm::vec2 TopLeft() const noexcept;
+    virtual glm::vec2 TopRight() const noexcept;
+    virtual glm::vec2 BottomLeft() const noexcept;
+    virtual glm::vec2 BottomRight() const noexcept;
+
+    virtual float Top() const noexcept;
+    virtual float Bottom() const noexcept;
+    virtual float Left() const noexcept;
+    virtual float Right() const noexcept;
 
     virtual bool CheckCollision(const Mesh* other) const noexcept;
 

@@ -14,10 +14,10 @@ zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, const glm::vec2& topR
 
 zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, float width, float height) :
 	Mesh(
-		rectangleVertexData,
-		sizeof(rectangleVertexData),
-		rectangleIndices,
-		sizeof(rectangleIndices),
+		rectangleVertexData_,
+		sizeof(rectangleVertexData_),
+		rectangleIndices_,
+		sizeof(rectangleIndices_),
 		rectangleVertexAttributes
 	)
 {
@@ -29,7 +29,53 @@ zn::RectangleMesh::RectangleMesh() :
 	RectangleMesh(glm::vec2(-0.5f, -0.5f), 1.0f, 1.0f)
 {}
 
-bool zn::RectangleMesh::CheckCollision(const Mesh * other) const noexcept
+glm::vec2 zn::RectangleMesh::TopLeft() const noexcept
 {
-	return false;
+	return glm::vec2(position_.x, position_.y);
+}
+
+glm::vec2 zn::RectangleMesh::TopRight() const noexcept
+{
+	return glm::vec2(position_.x + scale_.x, position_.y);
+}
+
+glm::vec2 zn::RectangleMesh::BottomLeft() const noexcept
+{
+	return glm::vec2(position_.x, position_.y + scale_.y);
+}
+
+glm::vec2 zn::RectangleMesh::BottomRight() const noexcept
+{
+	return glm::vec2(position_.x + scale_.x, position_.y + scale_.y);
+}
+
+float zn::RectangleMesh::Top() const noexcept
+{
+	return position_.y;
+}
+
+float zn::RectangleMesh::Bottom() const noexcept
+{
+	return position_.y + scale_.y;
+}
+
+float zn::RectangleMesh::Left() const noexcept
+{
+	return position_.x;
+}
+
+float zn::RectangleMesh::Right() const noexcept
+{
+	return position_.x + scale_.x;
+}
+
+bool zn::RectangleMesh::CheckCollision(const Mesh* other) const noexcept
+{
+	const bool bCollisionX = Left() <= other->Right()
+								    && other->Left() <= Right();
+
+	const bool bCollisionY = Top() <= other->Bottom()
+								   && other->Top() <= Bottom();
+
+	return bCollisionX && bCollisionY;
 }

@@ -3,6 +3,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "RectangleMesh.h"
+#include <iostream>
 
 #define DIST_SMALLEST 5.f
 #define DIST_MEDIUM 10.f
@@ -19,6 +20,9 @@ GamePong::GamePong() :
 
 	RegisterTickObserver([this](Application& app, double deltaTime) {
 		ProcessInput(app.GetWindow(), deltaTime);
+		});
+	RegisterTickObserver([this](Application& app, double deltaTime) {
+		CheckBallCollision();
 		});
 	RegisterTickObserver([this](Application& app, double deltaTime) {
 		Render(app.GetWindow(), deltaTime);
@@ -44,27 +48,33 @@ void GamePong::LoadScene()
 	// players
 
 	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(3*DIST_MEDIUM,			height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerOne_->bHasCollision = true;
+
 	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(width_ - 4* DIST_MEDIUM, height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerTwo_->bHasCollision = true;
 
 	// ball
 
 	meshBall_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(50.f, 50.f), DIST_MEDIUM, DIST_MEDIUM);
+	meshBall_->bHasCollision = true;
 
 	// top & bottom border
 
-	resourceManager_.LoadMesh_Rectangle(
+	meshBorderTop_ = resourceManager_.LoadMesh_Rectangle(
 		glm::vec2(
 			DIST_MEDIUM,
 			2 * DIST_MEDIUM),
 		width_ - 2* DIST_MEDIUM,
 		DIST_MEDIUM);
+	meshBorderTop_->bHasCollision = true;
 
-	resourceManager_.LoadMesh_Rectangle(
+	meshBorderBot_ = resourceManager_.LoadMesh_Rectangle(
 		glm::vec2(
 			DIST_MEDIUM,
 			height_ - 2* DIST_MEDIUM),
 		width_ - 2 * DIST_MEDIUM,
 		DIST_MEDIUM);
+	meshBorderBot_->bHasCollision = true;
 
 	// middle dotted line
 
@@ -124,8 +134,8 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 
 void GamePong::MoveBall(double deltaTime)
 {
-	meshBall_->position_[0] += ballSpeed_ * deltaTime * ballDirection_.x;
-	meshBall_->position_[1] += ballSpeed_ * deltaTime * ballDirection_.y;
+	meshBall_->position_[0] += static_cast<float>(ballSpeed_ * deltaTime * ballDirection_.x);
+	meshBall_->position_[1] += static_cast<float>(ballSpeed_ * deltaTime * ballDirection_.y);
 }
 
 void GamePong::Render(zn::Window& window, double deltaTime)
@@ -148,16 +158,34 @@ void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
 {
 	if (bGoUp)
 	{
-		mesh->position_.y -= static_cast<double>(deltaTime * playerSpeed_);
+		mesh->position_.y -= static_cast<float>(deltaTime * playerSpeed_);
 
 		if (mesh->position_.y < 0.05f * height_)
 			mesh->position_.y = 0.05f * height_;
 	}
 	else
 	{
-		mesh->position_.y += static_cast<double>(deltaTime * playerSpeed_);
+		mesh->position_.y += static_cast<float>(deltaTime * playerSpeed_);
 
 		if (mesh->position_.y > 0.95f * height_ - DIST_PLAYER_HEIGHT)
 			mesh->position_.y = 0.95f * height_ - DIST_PLAYER_HEIGHT;
+	}
+}
+
+void GamePong::CheckBallCollision()
+{
+	for (const zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
+	{
+		if (mesh != meshBall_ && mesh->bHasCollision)
+		{
+			if (meshBall_->CheckCollision(mesh))
+			{
+				if (mesh == meshBorderBot_ || mesh == meshBorderTop_)
+					ballDirection_.y *= -1.f;
+
+				if (mesh == meshPlayerOne_ || mesh == meshPlayerTwo_)
+					ballDirection_.x *= -1.f;
+			}
+		}
 	}
 }

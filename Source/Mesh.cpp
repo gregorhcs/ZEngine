@@ -14,6 +14,46 @@ Mesh::Mesh(GLfloat* vertices, unsigned int verticesSize, unsigned int* indices, 
 	bHoldsData_(false)
 {}
 
+glm::vec2 Mesh::TopLeft() const noexcept
+{
+	return glm::vec2(position_.x, position_.y);
+}
+
+glm::vec2 Mesh::TopRight() const noexcept
+{
+	return glm::vec2(position_.x + scale_.x, position_.y);
+}
+
+glm::vec2 Mesh::BottomLeft() const noexcept
+{
+	return glm::vec2(position_.x, position_.y + scale_.y);
+}
+
+glm::vec2 Mesh::BottomRight() const noexcept
+{
+	return glm::vec2(position_.x + scale_.x, position_.y + scale_.y);
+}
+
+float Mesh::Top() const noexcept
+{
+	return position_.y;
+}
+
+float Mesh::Bottom() const noexcept
+{
+	return position_.y + scale_.y;
+}
+
+float Mesh::Left() const noexcept
+{
+	return position_.x;
+}
+
+float Mesh::Right() const noexcept
+{
+	return position_.x + scale_.x;
+}
+
 unsigned int Mesh::CalculateNumberOfVertices()
 {
 	unsigned int sizeOfOneVertex = 0;
