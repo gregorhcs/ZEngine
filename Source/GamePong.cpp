@@ -7,14 +7,14 @@
 
 #include <iostream>
 
-#define DIST_SMALLEST 5.f
-#define DIST_MEDIUM 10.f
-#define DIST_LARGE 20.f
+#define DIST_SMALLEST 7.f
+#define DIST_MEDIUM 11.f
+#define DIST_LARGE 16.f
 
-#define DIST_PLAYER_HEIGHT 100.f
+#define DIST_PLAYER_HEIGHT 150.f
 
 GamePong::GamePong() :
-	Application(false)
+	Application(true)
 {
 	SetClearColor(glm::vec3(0.f, 0.f, 0.f));
 	SetWindowAndViewportSize(1920, 1080);
@@ -64,10 +64,10 @@ void GamePong::LoadScene()
 
 	// players
 
-	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(3*DIST_MEDIUM,			height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerOne_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(         2 * DIST_MEDIUM + DIST_LARGE, height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_LARGE, DIST_PLAYER_HEIGHT);
 	meshPlayerOne_->bHasCollision = true;
 
-	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(width_ - 4* DIST_MEDIUM, height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_MEDIUM, DIST_PLAYER_HEIGHT);
+	meshPlayerTwo_ = resourceManager_.LoadMesh_Rectangle(glm::vec2(width_ - 2 * DIST_MEDIUM - DIST_LARGE, height_/2 - DIST_PLAYER_HEIGHT / 2), DIST_LARGE, DIST_PLAYER_HEIGHT);
 	meshPlayerTwo_->bHasCollision = true;
 
 	// ball
@@ -92,6 +92,24 @@ void GamePong::LoadScene()
 		width_ - 2 * DIST_MEDIUM,
 		DIST_MEDIUM);
 	meshBorderBot_->bHasCollision = true;
+
+	// win bars
+
+	meshWinBarLeft = resourceManager_.LoadMesh_Rectangle(
+		glm::vec2(
+			- DIST_SMALLEST,
+			0.f),
+		DIST_SMALLEST,
+		height_);
+	meshWinBarLeft->bHasCollision = true;
+
+	meshWinBarRight = resourceManager_.LoadMesh_Rectangle(
+		glm::vec2(
+			width_,
+			0.f),
+		DIST_SMALLEST,
+		height_);
+	meshWinBarRight->bHasCollision = true;
 
 	// middle dotted line
 
@@ -219,6 +237,24 @@ void GamePong::CheckBallCollision()
 
 				if (mesh == meshPlayerOne_ || mesh == meshPlayerTwo_)
 					ballDirection_.x *= -1.f;
+
+				if (mesh == meshWinBarLeft)
+				{
+					if (playerTwoScore_ < '9')
+						playerTwoScore_++;
+
+					meshBall_->position_ = glm::vec3(width_ - 100.f, 100.f, 0.f);
+					ballDirection_ = glm::vec2(-1.f, -0.2f);
+				}
+
+				if (mesh == meshWinBarRight)
+				{
+					if (playerOneScore_ < '9')
+						playerOneScore_++;
+
+					meshBall_->position_ = glm::vec3(100.f, 100.f, 0.f);
+					ballDirection_ = glm::vec2(1.f, -0.2f);
+				}
 			}
 		}
 	}

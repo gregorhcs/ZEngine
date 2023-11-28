@@ -19,9 +19,6 @@ class GamePong : public zn::Application
 		zn::ShaderProgram* shaderProgramNoTexture_;
 		zn::ShaderProgram* shaderProgramFont_;
 
-		zn::Texture* tx1;
-		zn::Texture* tx2;
-
 		zn::Font* font_;
 
 		zn::Mesh* meshPlayerOneScore_;
@@ -31,6 +28,8 @@ class GamePong : public zn::Application
 		zn::Mesh* meshPlayerOne_;
 		zn::Mesh* meshPlayerTwo_;
 		zn::Mesh* meshBall_;
+		zn::Mesh* meshWinBarLeft;
+		zn::Mesh* meshWinBarRight;
 
 		void LoadScene();
 
@@ -44,8 +43,8 @@ class GamePong : public zn::Application
 		// ---------------------------
 		// game state
 
-		char playerOneScore_ = '1';
-		char playerTwoScore_ = '2';
+		char playerOneScore_ = '0';
+		char playerTwoScore_ = '0';
 
 		// ---------------------------
 		// gameplay
