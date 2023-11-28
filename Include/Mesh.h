@@ -24,7 +24,7 @@ public:
 
     glm::vec3 position_ = glm::vec3(0.f);
     glm::vec3 rotation_ = glm::vec3(0.f);
-    glm::vec3 scale_ = glm::vec3(0.f);
+    glm::vec3 scale_ = glm::vec3(1.f);
 
     bool bHasCollision = false;
 

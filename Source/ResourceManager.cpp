@@ -4,12 +4,15 @@
 #include <sstream>
 #include <iostream>
 #include <stdexcept>
+#include <format>
 
 #include <stb/stb_image.h>
 
 #include "ShaderProgram.h"
 #include "SampleDataFactory.h"
-#include "RectangleMesh.h"
+#include "Rectangle.h"
+#include "TexturedRectangle.h"
+#include "Font.h"
 
 namespace zn {
 
@@ -28,6 +31,9 @@ ResourceManager::~ResourceManager()
 
 	for (Mesh* mesh : loadedMeshes_)
 		free(mesh);
+
+	for (Font* font : loadedFonts_)
+		free(font);
 }
 
 ShaderProgram* ResourceManager::LoadShaderProgram(const std::string& vertexShaderFilePath, const std::string& fragmentShaderFilePath)
@@ -90,15 +96,40 @@ Mesh* ResourceManager::LoadMesh_CubeWithTexture()
 
 Mesh* ResourceManager::LoadMesh_Rectangle(const glm::vec2& topLeft, float width, float height)
 {
-	std::vector<VertexAttribute> vertexAttributes{
-		VertexAttribute{ 3, GL_FLOAT, 3 * sizeof(GLfloat), nullptr }, // position
-	};
-
 	Mesh* mesh = new RectangleMesh(topLeft, width, height);
 
 	loadedMeshes_.push_back(mesh);
 
 	return mesh;
+}
+
+Mesh* ResourceManager::LoadMesh_RectangleWithTexture(const glm::vec2& topLeft, float width, float height)
+{
+	Mesh* mesh = new TexturedRectangleMesh(topLeft, width, height);
+
+	loadedMeshes_.push_back(mesh);
+
+	return mesh;
+}
+
+Font* ResourceManager::LoadFont(const std::string& filePath)
+{
+	Font* font = new Font();
+	loadedFonts_.push_back(font);
+
+	for (unsigned int row = 1; row < 9; ++row)
+	{
+		for (unsigned int column = 1; column < 9; ++column)
+		{
+			std::string filepath = std::format("{}row-{}-column-{}.png", filePath, row, column);
+
+			Texture* texture = LoadTexture(filepath, GL_TEXTURE0, GL_RGBA);
+
+			font->AddCharacter(32 + (row - 1) * 8 + (column - 1), texture);
+		}
+	}
+
+	return font;
 }
 
 const std::vector<Mesh*> ResourceManager::GetLoadedMeshes() const

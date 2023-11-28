@@ -49,6 +49,12 @@
     <Filter Include="Source Files\ZEngine\Resources">
       <UniqueIdentifier>{3efcc117-9fcf-47b5-8a4c-f9299e563040}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\ZEngine\Resources\MeshTypes">
+      <UniqueIdentifier>{6688818e-2aa0-4339-88e3-e9c01c22b5be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ZEngine\Resources\MeshTypes">
+      <UniqueIdentifier>{b82a564b-1775-4ba6-a185-beca8f3b5d8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application.cpp">
@@ -87,9 +93,6 @@
     <ClCompile Include="Source\Mesh.cpp">
       <Filter>Source Files\ZEngine\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="Source\RectangleMesh.cpp">
-      <Filter>Source Files\ZEngine\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Resource.cpp">
       <Filter>Source Files\ZEngine\Resources</Filter>
     </ClCompile>
@@ -107,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="Source\World.cpp">
       <Filter>Source Files\ZEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Font.cpp">
+      <Filter>Source Files\ZEngine\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Rectangle.cpp">
+      <Filter>Source Files\ZEngine\Resources\MeshTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TexturedRectangle.cpp">
+      <Filter>Source Files\ZEngine\Resources\MeshTypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +158,6 @@
     <ClInclude Include="Include\Mesh.h">
       <Filter>Header Files\ZEngine\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="Include\RectangleMesh.h">
-      <Filter>Header Files\ZEngine\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Resource.h">
       <Filter>Header Files\ZEngine\Resources</Filter>
     </ClInclude>
@@ -170,6 +179,18 @@
     <ClInclude Include="Include\World.h">
       <Filter>Header Files\ZEngine</Filter>
     </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Font.h">
+      <Filter>Header Files\ZEngine\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Rectangle.h">
+      <Filter>Header Files\ZEngine\Resources\MeshTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\TexturedRectangle.h">
+      <Filter>Header Files\ZEngine\Resources\MeshTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\awesomeface.png">
@@ -190,6 +211,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="Resources\Rectangle.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\RectangleWithTexture.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Resources\RectangleWithTexture.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

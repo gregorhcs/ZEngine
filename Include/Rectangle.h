@@ -31,20 +31,6 @@ class RectangleMesh : public Mesh
 
 		virtual bool CheckCollision(const Mesh* other) const noexcept;
 
-	private:
-
-		float rectangleVertexData_[8] = {
-			1.f, 0.f,  // top right
-			1.f, 1.f,  // bottom right
-			0.f, 1.f,  // bottom left
-			0.f, 0.f,  // top left 
-		};
-
-		unsigned int rectangleIndices_[6] = {
-			0, 1, 3,   // first triangle
-			1, 2, 3    // second triangle
-		};
-
 };
 
 }

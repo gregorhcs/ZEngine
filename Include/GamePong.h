@@ -16,8 +16,16 @@ class GamePong : public zn::Application
 
 		zn::ResourceManager resourceManager_;
 
-		zn::ShaderProgram* shaderProgram_;
+		zn::ShaderProgram* shaderProgramNoTexture_;
+		zn::ShaderProgram* shaderProgramFont_;
 
+		zn::Texture* tx1;
+		zn::Texture* tx2;
+
+		zn::Font* font_;
+
+		zn::Mesh* meshPlayerOneScore_;
+		zn::Mesh* meshPlayerTwoScore_;
 		zn::Mesh* meshBorderTop_;
 		zn::Mesh* meshBorderBot_;
 		zn::Mesh* meshPlayerOne_;
@@ -34,7 +42,13 @@ class GamePong : public zn::Application
 		void Render(zn::Window& window, double deltaTime);
 
 		// ---------------------------
-		// utils
+		// game state
+
+		char playerOneScore_ = '1';
+		char playerTwoScore_ = '2';
+
+		// ---------------------------
+		// gameplay
 
 		float ballSpeed_ = 500.f;
 		float playerSpeed_ = 550.f;

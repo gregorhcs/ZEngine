@@ -11,13 +11,13 @@
 
 namespace zn {
 
-// concept
 template<class T, class U>
 concept Derived = std::is_base_of<U, T>::value;
 
 class ShaderProgram;
 class Texture;
 class Mesh;
+class Font;
 
 class ResourceManager
 {
@@ -39,9 +39,15 @@ class ResourceManager
 		/* Load a 2D rectangle. */
 		Mesh* LoadMesh_Rectangle(const glm::vec2& topLeft, float width, float height);
 
+		/* Load a 2D rectangle with a texture. */
+		Mesh* LoadMesh_RectangleWithTexture(const glm::vec2& topLeft, float width, float height);
+
 		/* Load mesh. */
 		template<class T>
 		T* LoadMesh() requires Derived<T, Mesh>;
+
+		/* Load Cascadia Mono Regular font. */
+		Font* LoadFont(const std::string& filePath);
 
 		const std::vector<Mesh*> GetLoadedMeshes() const;
 
@@ -50,6 +56,7 @@ class ResourceManager
 		std::vector<Texture*> loadedTextures_;
 		std::vector<ShaderProgram*> loadedShaderPrograms_;
 		std::vector<Mesh*> loadedMeshes_;
+		std::vector<Font*> loadedFonts_;
 
 		GLuint textureIdCounter_ = 0;
 

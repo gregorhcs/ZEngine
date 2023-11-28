@@ -44,7 +44,7 @@ void GameRotatingCubes::LoadScene()
 		"Resources/CubeWithTexture.frag"
 	);
 
-	usedTextures_.push_back(resourceManager_.LoadTexture("Resources/container.jpg", GL_TEXTURE0, GL_RGB));
+	usedTextures_.push_back(resourceManager_.LoadTexture("Resources/CascadiaMono/row-3-column-8.png", GL_TEXTURE0, GL_RGBA));
 	usedTextures_.push_back(resourceManager_.LoadTexture("Resources/awesomeface.png", GL_TEXTURE1, GL_RGBA));
 
 	shaderProgram_->Use();

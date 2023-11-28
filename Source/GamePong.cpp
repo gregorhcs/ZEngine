@@ -2,7 +2,9 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "RectangleMesh.h"
+#include "Rectangle.h"
+#include "Font.h"
+
 #include <iostream>
 
 #define DIST_SMALLEST 5.f
@@ -12,7 +14,7 @@
 #define DIST_PLAYER_HEIGHT 100.f
 
 GamePong::GamePong() :
-	Application(true)
+	Application(false)
 {
 	SetClearColor(glm::vec3(0.f, 0.f, 0.f));
 	SetWindowAndViewportSize(1920, 1080);
@@ -38,12 +40,27 @@ GamePong::GamePong() :
 
 void GamePong::LoadScene()
 {
-	shaderProgram_ = resourceManager_.LoadShaderProgram(
+	shaderProgramNoTexture_ = resourceManager_.LoadShaderProgram(
 		"Resources/Rectangle.vert",
 		"Resources/Rectangle.frag"
 	);
 
-	shaderProgram_->Use();
+	shaderProgramFont_ = resourceManager_.LoadShaderProgram(
+		"Resources/CubeWithTexture.vert",
+		"Resources/CubeWithTexture.frag"
+	);
+	shaderProgramFont_->Use();
+	shaderProgramFont_->SetTextureUniforms(1);
+
+	font_ = resourceManager_.LoadFont("Resources/CascadiaMono/");
+
+	// player scores
+
+	meshPlayerOneScore_ = resourceManager_.LoadMesh_CubeWithTexture();
+	meshPlayerOneScore_->position_ = glm::vec3(-0.15f, 0.5f, 0.0f);
+
+	meshPlayerTwoScore_ = resourceManager_.LoadMesh_CubeWithTexture();
+	meshPlayerTwoScore_->position_ = glm::vec3(0.85f, 0.5f, 0.0f);
 
 	// players
 
@@ -81,9 +98,7 @@ void GamePong::LoadScene()
 	for (float z = height_ /2 - DIST_MEDIUM; z > 3 * DIST_MEDIUM; z -= 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
-			glm::vec2(
-				width_ /2 - DIST_MEDIUM / 2,
-				z),
+			glm::vec2(width_ /2 - DIST_MEDIUM / 2, z),
 			DIST_MEDIUM,
 			DIST_MEDIUM);
 	}
@@ -91,9 +106,7 @@ void GamePong::LoadScene()
 	for (float z = height_ / 2 + DIST_MEDIUM; z < height_ - 3 * DIST_MEDIUM; z += 2 * DIST_MEDIUM)
 	{
 		resourceManager_.LoadMesh_Rectangle(
-			glm::vec2(
-				width_ / 2 - DIST_MEDIUM / 2,
-				z),
+			glm::vec2(width_ / 2 - DIST_MEDIUM / 2, z),
 			DIST_MEDIUM,
 			DIST_MEDIUM);
 	}
@@ -140,15 +153,36 @@ void GamePong::MoveBall(double deltaTime)
 
 void GamePong::Render(zn::Window& window, double deltaTime)
 {
-	shaderProgram_->Use();
-	shaderProgram_->SetMat4f("projection", glm::ortho(0.f, width_, height_, 0.f, -1.f, 1.f));
+	shaderProgramNoTexture_->Use();
+	shaderProgramNoTexture_->SetMat4f("projection", glm::ortho(0.f, width_, height_, 0.f, -1.f, 1.f));
+
+	shaderProgramFont_->Use();
+	shaderProgramFont_->SetMat4f("view", zn::Camera().View());
+	shaderProgramFont_->SetMat4f("projection", zn::Camera().Projection(width_, height_));
 
 	for (zn::Mesh* mesh : resourceManager_.GetLoadedMeshes())
 	{
-		glm::mat4 model(1.f);
-		model = glm::translate(model, mesh->position_);
-		model = glm::scale(model, mesh->scale_);
-		shaderProgram_->SetMat4f("model", model);
+		zn::ShaderProgram* usedShaderProgram = nullptr;
+		zn::Texture* usedTexture = nullptr;
+
+		if (mesh == meshPlayerOneScore_ || mesh == meshPlayerTwoScore_)
+		{
+			usedShaderProgram = shaderProgramFont_;
+			usedTexture = font_->FindTextureOfChar(mesh == meshPlayerOneScore_ ? playerOneScore_ : playerTwoScore_);
+		}
+		else {
+			usedShaderProgram = shaderProgramNoTexture_;
+		}
+
+
+		if (usedShaderProgram) {
+			usedShaderProgram->Use();
+			usedShaderProgram->SetMat4f("model", glm::scale(glm::translate(glm::mat4(1.f), mesh->position_), mesh->scale_));
+		}
+
+		if (usedTexture) {
+			usedTexture->ActivateAndBind();
+		}
 
 		mesh->Draw();
 	}
