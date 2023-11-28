@@ -7,17 +7,11 @@
 
 #include <iostream>
 
-#define DIST_SMALLEST 7.f
-#define DIST_MEDIUM 11.f
-#define DIST_LARGE 16.f
-
-#define DIST_PLAYER_HEIGHT 150.f
-
 GamePong::GamePong() :
 	Application(true)
 {
 	SetClearColor(glm::vec3(0.f, 0.f, 0.f));
-	SetWindowAndViewportSize(1920, 1080);
+	SetWindowAndViewportSize(APP_WIDTH, APP_HEIGHT);
 	SetWindowTitle("Pong");
 
 	RegisterTickObserver([this](Application& app, double deltaTime) {
@@ -142,6 +136,17 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window.GLFWWindow(), true);
 
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_N) == GLFW_PRESS)
+	{
+		playerOneScore_ = playerTwoScore_ = '0';
+		ballSpeed_ = ballInitialSpeed_;
+		ballDirection_ = ballInitialDirection_;
+
+		meshBall_->Reset();
+		meshPlayerOne_->Reset();
+		meshPlayerTwo_->Reset();
+	}
+
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_W) == GLFW_PRESS)
 		ZMoveMesh(meshPlayerOne_, deltaTime, true);
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_A) == GLFW_PRESS)
@@ -165,6 +170,8 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 
 void GamePong::MoveBall(double deltaTime)
 {
+	ballSpeed_ += deltaTime * ballSpeedAcceleration_;
+
 	meshBall_->position_[0] += static_cast<float>(ballSpeed_ * deltaTime * ballDirection_.x);
 	meshBall_->position_[1] += static_cast<float>(ballSpeed_ * deltaTime * ballDirection_.y);
 }
@@ -183,6 +190,7 @@ void GamePong::Render(zn::Window& window, double deltaTime)
 		zn::ShaderProgram* usedShaderProgram = nullptr;
 		zn::Texture* usedTexture = nullptr;
 
+		// mesh specific code
 		if (mesh == meshPlayerOneScore_ || mesh == meshPlayerTwoScore_)
 		{
 			usedShaderProgram = shaderProgramFont_;
@@ -191,6 +199,7 @@ void GamePong::Render(zn::Window& window, double deltaTime)
 		else {
 			usedShaderProgram = shaderProgramNoTexture_;
 		}
+		// ~ mesh specific code
 
 
 		if (usedShaderProgram) {
@@ -212,15 +221,64 @@ void GamePong::ZMoveMesh(zn::Mesh* mesh, double deltaTime, bool bGoUp)
 	{
 		mesh->position_.y -= static_cast<float>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y < 0.05f * height_)
-			mesh->position_.y = 0.05f * height_;
+		if (mesh->position_.y < playerMinY_)
+			mesh->position_.y = playerMinY_;
 	}
 	else
 	{
 		mesh->position_.y += static_cast<float>(deltaTime * playerSpeed_);
 
-		if (mesh->position_.y > 0.95f * height_ - DIST_PLAYER_HEIGHT)
-			mesh->position_.y = 0.95f * height_ - DIST_PLAYER_HEIGHT;
+		if (mesh->position_.y > playerMaxY_)
+			mesh->position_.y = playerMaxY_;
+	}
+}
+
+void GamePong::HandleOnBorderCollided()
+{
+	ballDirection_.y *= -1.f;
+}
+
+void GamePong::HandleOnPlayerCollided(const zn::Mesh* playerMesh)
+{
+	const float yPlayerBallCollisionRange = DIST_PLAYER_HEIGHT + 2 * DIST_MEDIUM;
+
+	const zn::Mesh* yPlayerPosition = playerMesh == meshPlayerOne_ ? meshPlayerOne_ : meshPlayerTwo_;
+
+	// calc mid y positions
+	const float playerMidY = yPlayerPosition->position_.y + DIST_PLAYER_HEIGHT / 2;
+	const float ballMidY   = meshBall_->position_.y       + DIST_MEDIUM / 2;
+
+	const float yDirectionAdjustmentFactor = abs(ballMidY-playerMidY) / abs(yPlayerBallCollisionRange/2);
+
+	ballDirection_.x *= -1.f;
+	ballDirection_.y = ballPlayerYAdjustmentScale * yDirectionAdjustmentFactor;
+
+	if (yDirectionAdjustmentFactor > 0.82f) {
+		ballDirection_.y *= -1;
+	}
+}
+
+void GamePong::HandleOnWinBarCollided(const zn::Mesh* mesh)
+{
+	if (mesh == meshWinBarLeft)
+	{
+		if (playerTwoScore_ < '9')
+			playerTwoScore_++;
+
+		meshBall_->position_ = glm::vec3(width_ - 100.f, 100.f, 0.f);
+
+		ballSpeed_ = ballInitialSpeed_;
+		ballDirection_ = glm::vec2(-1.f, -0.2f);
+	}
+	else if (mesh == meshWinBarRight)
+	{
+		if (playerOneScore_ < '9')
+			playerOneScore_++;
+
+		meshBall_->position_ = glm::vec3(100.f, 100.f, 0.f);
+
+		ballSpeed_ = ballInitialSpeed_;
+		ballDirection_ = glm::vec2(1.f, -0.2f);
 	}
 }
 
@@ -233,28 +291,13 @@ void GamePong::CheckBallCollision()
 			if (meshBall_->CheckCollision(mesh))
 			{
 				if (mesh == meshBorderBot_ || mesh == meshBorderTop_)
-					ballDirection_.y *= -1.f;
+					HandleOnBorderCollided();
 
 				if (mesh == meshPlayerOne_ || mesh == meshPlayerTwo_)
-					ballDirection_.x *= -1.f;
+					HandleOnPlayerCollided(mesh);
 
-				if (mesh == meshWinBarLeft)
-				{
-					if (playerTwoScore_ < '9')
-						playerTwoScore_++;
-
-					meshBall_->position_ = glm::vec3(width_ - 100.f, 100.f, 0.f);
-					ballDirection_ = glm::vec2(-1.f, -0.2f);
-				}
-
-				if (mesh == meshWinBarRight)
-				{
-					if (playerOneScore_ < '9')
-						playerOneScore_++;
-
-					meshBall_->position_ = glm::vec3(100.f, 100.f, 0.f);
-					ballDirection_ = glm::vec2(1.f, -0.2f);
-				}
+				if (mesh == meshWinBarLeft || mesh == meshWinBarRight)
+					HandleOnWinBarCollided(mesh);
 			}
 		}
 	}

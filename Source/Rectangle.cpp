@@ -33,7 +33,7 @@ zn::RectangleMesh::RectangleMesh(const glm::vec2& topLeft, float width, float he
 		rectangleVertexAttributes
 	)
 {
-	position_ = glm::vec3(topLeft, 0.f);
+	position_ = initialPosition_ = glm::vec3(topLeft, 0.f);
 	scale_ = glm::vec3(width, height, 0.f);
 }
 

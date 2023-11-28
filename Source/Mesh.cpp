@@ -144,6 +144,11 @@ void Mesh::Draw() const noexcept
 	glBindVertexArray(0);
 }
 
+void Mesh::Reset()
+{
+	position_ = initialPosition_;
+}
+
 bool Mesh::CheckCollision(const Mesh* other) const noexcept
 {
 	return false;
