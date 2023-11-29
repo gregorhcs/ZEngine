@@ -186,7 +186,7 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 		glfwSetWindowShouldClose(window.GLFWWindow(), true);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_F12) == GLFW_PRESS)
-		save_screenshot("D:\Zcreenshot", width_, height_);
+		save_screenshot("ZScreenshot.tga", width_, height_);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_N) == GLFW_PRESS)
 	{

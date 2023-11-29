@@ -179,9 +179,6 @@
     <ClInclude Include="Include\World.h">
       <Filter>Header Files\ZEngine</Filter>
     </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Font.h">
       <Filter>Header Files\ZEngine\Resources</Filter>
     </ClInclude>
@@ -203,6 +200,12 @@
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resources\ZPongIcon32x32.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\ZPongIcon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\ZPongIcon.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

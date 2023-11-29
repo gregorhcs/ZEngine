@@ -163,7 +163,6 @@
     <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Font.h" />
     <ClInclude Include="Include\Application.h" />
     <ClInclude Include="Include\Camera.h" />
     <ClInclude Include="Include\Font.h" />
@@ -191,6 +190,8 @@
   <ItemGroup>
     <Image Include="Resources\awesomeface.png" />
     <Image Include="Resources\container.jpg" />
+    <Image Include="Resources\ZPongIcon.ico" />
+    <Image Include="Resources\ZPongIcon.png" />
     <Image Include="Resources\ZPongIcon32x32.png" />
   </ItemGroup>
   <ItemGroup>
