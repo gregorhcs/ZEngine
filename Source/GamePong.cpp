@@ -2,10 +2,52 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "stb/stb_image.h"
+
 #include "Rectangle.h"
 #include "Font.h"
 
 #include <iostream>
+
+bool save_screenshot(std::string filename, int w, int h)
+{
+	//This prevents the images getting padded 
+   // when the width multiplied by 3 is not a multiple of 4
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+
+	int nSize = w * h * 3;
+	// First let's create our buffer, 3 channels per Pixel
+	char* dataBuffer = (char*)malloc(nSize * sizeof(char));
+
+	if (!dataBuffer) return false;
+
+	// Let's fetch them from the backbuffer	
+	// We request the pixels in GL_BGR format, thanks to Berzeger for the tip
+	glReadPixels((GLint)0, (GLint)0,
+		(GLint)w, (GLint)h,
+		GL_BGR, GL_UNSIGNED_BYTE, dataBuffer);
+
+	//Now the file creation
+	#pragma warning(suppress : 4996)
+	FILE* filePtr = fopen(filename.c_str(), "wb");
+	if (!filePtr) return false;
+
+
+	unsigned char TGAheader[12] = { 0,0,2,0,0,0,0,0,0,0,0,0 };
+	unsigned char header[6] = { w % 256,w / 256,
+					h % 256,h / 256,
+					24,0 };
+	// We write the headers
+	fwrite(TGAheader, sizeof(unsigned char), 12, filePtr);
+	fwrite(header, sizeof(unsigned char), 6, filePtr);
+	// And finally our image data
+	fwrite(dataBuffer, sizeof(GLubyte), nSize, filePtr);
+	fclose(filePtr);
+
+	free(dataBuffer);
+
+	return true;
+}
 
 GamePong::GamePong() :
 	Application(true)
@@ -14,8 +56,15 @@ GamePong::GamePong() :
 	SetWindowAndViewportSize(APP_WIDTH, APP_HEIGHT);
 	SetWindowTitle("Pong");
 
+	GLFWimage images[2];
+	images[0].pixels = stbi_load("Resources/ZPongIcon16x16.png", &images[0].width, &images[0].height, 0, 4);
+	images[1].pixels = stbi_load("Resources/ZPongIcon32x32.png", &images[1].width, &images[1].height, 0, 4);
+	glfwSetWindowIcon(GetWindow().GLFWWindow(), 1, images);
+	stbi_image_free(images[0].pixels);
+	stbi_image_free(images[1].pixels);
+
 	RegisterTickObserver([this](Application& app, double deltaTime) {
-		ProcessInput(app.GetWindow(), deltaTime);
+		MoveBall(deltaTime);
 		});
 	RegisterTickObserver([this](Application& app, double deltaTime) {
 		CheckBallCollision();
@@ -24,7 +73,7 @@ GamePong::GamePong() :
 		Render(app.GetWindow(), deltaTime);
 		});
 	RegisterTickObserver([this](Application& app, double deltaTime) {
-		MoveBall(deltaTime);
+		ProcessInput(app.GetWindow(), deltaTime);
 		});
 
 	glm::normalize(ballDirection_);
@@ -135,6 +184,9 @@ void GamePong::ProcessInput(zn::Window& window, double deltaTime)
 {
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_ESCAPE) == GLFW_PRESS)
 		glfwSetWindowShouldClose(window.GLFWWindow(), true);
+
+	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_F12) == GLFW_PRESS)
+		save_screenshot("D:\Zcreenshot", width_, height_);
 
 	if (glfwGetKey(window.GLFWWindow(), GLFW_KEY_N) == GLFW_PRESS)
 	{

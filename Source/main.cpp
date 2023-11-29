@@ -1,10 +1,8 @@
 #include "GameRotatingCubes.h"
 #include "GamePong.h"
 
-int main(int argc, char** argv) 
+int WinMain()
 {
-	(void) argc, (void) argv;
-
 	GamePong game;
 	game.Run();
 

@@ -191,12 +191,18 @@
     <ClInclude Include="Include\TexturedRectangle.h">
       <Filter>Header Files\ZEngine\Resources\MeshTypes</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\awesomeface.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="Resources\container.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Resources\ZPongIcon32x32.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
@@ -219,5 +225,10 @@
     <None Include="Resources\RectangleWithTexture.vert">
       <Filter>Resource Files</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ZEngine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
